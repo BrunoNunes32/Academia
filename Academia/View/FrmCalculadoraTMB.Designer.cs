@@ -1,5 +1,5 @@
 ﻿
-namespace Academia.Window
+namespace Academia.View
 {
     partial class FrmCalculadoraTMB
     {
@@ -12,7 +12,9 @@ namespace Academia.Window
         /// Limpar os recursos que estão sendo usados.
         /// </summary>
         /// <param name="disposing">true se for necessário descartar os recursos gerenciados; caso contrário, false.</param>
+#pragma warning disable CS0115 // "FrmCalculadoraTMB.Dispose(bool)": não encontrado nenhum método adequado para substituição
         protected override void Dispose(bool disposing)
+#pragma warning restore CS0115 // "FrmCalculadoraTMB.Dispose(bool)": não encontrado nenhum método adequado para substituição
         {
             if (disposing && (components != null))
             {
@@ -318,7 +320,7 @@ namespace Academia.Window
             // 
             this.txtGordura.Location = new System.Drawing.Point(80, 124);
             this.txtGordura.Name = "txtGordura";
-            this.txtGordura.Size = new System.Drawing.Size(100, 20);
+            this.txtGordura.Size = new System.Drawing.Size(102, 20);
             this.txtGordura.TabIndex = 9;
             // 
             // lblGordura
@@ -334,7 +336,7 @@ namespace Academia.Window
             // 
             this.txtCarboidrato.Location = new System.Drawing.Point(80, 98);
             this.txtCarboidrato.Name = "txtCarboidrato";
-            this.txtCarboidrato.Size = new System.Drawing.Size(100, 20);
+            this.txtCarboidrato.Size = new System.Drawing.Size(102, 20);
             this.txtCarboidrato.TabIndex = 7;
             // 
             // llblCarbo
@@ -350,21 +352,21 @@ namespace Academia.Window
             // 
             this.txtAgua.Location = new System.Drawing.Point(80, 72);
             this.txtAgua.Name = "txtAgua";
-            this.txtAgua.Size = new System.Drawing.Size(100, 20);
+            this.txtAgua.Size = new System.Drawing.Size(102, 20);
             this.txtAgua.TabIndex = 5;
             // 
             // txtCreatina
             // 
             this.txtCreatina.Location = new System.Drawing.Point(80, 46);
             this.txtCreatina.Name = "txtCreatina";
-            this.txtCreatina.Size = new System.Drawing.Size(100, 20);
+            this.txtCreatina.Size = new System.Drawing.Size(102, 20);
             this.txtCreatina.TabIndex = 4;
             // 
             // txtProteina
             // 
             this.txtProteina.Location = new System.Drawing.Point(80, 23);
             this.txtProteina.Name = "txtProteina";
-            this.txtProteina.Size = new System.Drawing.Size(100, 20);
+            this.txtProteina.Size = new System.Drawing.Size(102, 20);
             this.txtProteina.TabIndex = 3;
             // 
             // lblAgua
@@ -410,7 +412,7 @@ namespace Academia.Window
             this.grpPreTreino.Controls.Add(this.lblCitrulinaMalato);
             this.grpPreTreino.Location = new System.Drawing.Point(23, 293);
             this.grpPreTreino.Name = "grpPreTreino";
-            this.grpPreTreino.Size = new System.Drawing.Size(491, 76);
+            this.grpPreTreino.Size = new System.Drawing.Size(651, 76);
             this.grpPreTreino.TabIndex = 13;
             this.grpPreTreino.TabStop = false;
             this.grpPreTreino.Text = "Pré-Treino";
@@ -418,9 +420,9 @@ namespace Academia.Window
             // txtGlicerol
             // 
             this.txtGlicerol.Enabled = false;
-            this.txtGlicerol.Location = new System.Drawing.Point(388, 24);
+            this.txtGlicerol.Location = new System.Drawing.Point(417, 24);
             this.txtGlicerol.Name = "txtGlicerol";
-            this.txtGlicerol.Size = new System.Drawing.Size(87, 20);
+            this.txtGlicerol.Size = new System.Drawing.Size(102, 20);
             this.txtGlicerol.TabIndex = 24;
             // 
             // txtBetaAlanina
@@ -428,13 +430,13 @@ namespace Academia.Window
             this.txtBetaAlanina.Enabled = false;
             this.txtBetaAlanina.Location = new System.Drawing.Point(96, 50);
             this.txtBetaAlanina.Name = "txtBetaAlanina";
-            this.txtBetaAlanina.Size = new System.Drawing.Size(87, 20);
+            this.txtBetaAlanina.Size = new System.Drawing.Size(102, 20);
             this.txtBetaAlanina.TabIndex = 22;
             // 
             // lblGlicerol
             // 
             this.lblGlicerol.AutoSize = true;
-            this.lblGlicerol.Location = new System.Drawing.Point(336, 31);
+            this.lblGlicerol.Location = new System.Drawing.Point(365, 31);
             this.lblGlicerol.Name = "lblGlicerol";
             this.lblGlicerol.Size = new System.Drawing.Size(45, 13);
             this.lblGlicerol.TabIndex = 23;
@@ -452,23 +454,23 @@ namespace Academia.Window
             // txtTaurina
             // 
             this.txtTaurina.Enabled = false;
-            this.txtTaurina.Location = new System.Drawing.Point(241, 24);
+            this.txtTaurina.Location = new System.Drawing.Point(257, 24);
             this.txtTaurina.Name = "txtTaurina";
-            this.txtTaurina.Size = new System.Drawing.Size(87, 20);
+            this.txtTaurina.Size = new System.Drawing.Size(102, 20);
             this.txtTaurina.TabIndex = 20;
             // 
             // txtNitratos
             // 
             this.txtNitratos.Enabled = false;
-            this.txtNitratos.Location = new System.Drawing.Point(241, 50);
+            this.txtNitratos.Location = new System.Drawing.Point(257, 50);
             this.txtNitratos.Name = "txtNitratos";
-            this.txtNitratos.Size = new System.Drawing.Size(87, 20);
+            this.txtNitratos.Size = new System.Drawing.Size(102, 20);
             this.txtNitratos.TabIndex = 18;
             // 
             // lblTaurina
             // 
             this.lblTaurina.AutoSize = true;
-            this.lblTaurina.Location = new System.Drawing.Point(189, 31);
+            this.lblTaurina.Location = new System.Drawing.Point(205, 31);
             this.lblTaurina.Name = "lblTaurina";
             this.lblTaurina.Size = new System.Drawing.Size(46, 13);
             this.lblTaurina.TabIndex = 19;
@@ -477,15 +479,15 @@ namespace Academia.Window
             // txtCafeina
             // 
             this.txtCafeina.Enabled = false;
-            this.txtCafeina.Location = new System.Drawing.Point(388, 50);
+            this.txtCafeina.Location = new System.Drawing.Point(417, 50);
             this.txtCafeina.Name = "txtCafeina";
-            this.txtCafeina.Size = new System.Drawing.Size(87, 20);
+            this.txtCafeina.Size = new System.Drawing.Size(102, 20);
             this.txtCafeina.TabIndex = 14;
             // 
             // lblCafeina
             // 
             this.lblCafeina.AutoSize = true;
-            this.lblCafeina.Location = new System.Drawing.Point(334, 53);
+            this.lblCafeina.Location = new System.Drawing.Point(363, 53);
             this.lblCafeina.Name = "lblCafeina";
             this.lblCafeina.Size = new System.Drawing.Size(48, 13);
             this.lblCafeina.TabIndex = 13;
@@ -494,7 +496,7 @@ namespace Academia.Window
             // lblNitratos
             // 
             this.lblNitratos.AutoSize = true;
-            this.lblNitratos.Location = new System.Drawing.Point(189, 53);
+            this.lblNitratos.Location = new System.Drawing.Point(205, 53);
             this.lblNitratos.Name = "lblNitratos";
             this.lblNitratos.Size = new System.Drawing.Size(46, 13);
             this.lblNitratos.TabIndex = 17;
@@ -505,7 +507,7 @@ namespace Academia.Window
             this.txtCitrulinaMalato.Enabled = false;
             this.txtCitrulinaMalato.Location = new System.Drawing.Point(96, 24);
             this.txtCitrulinaMalato.Name = "txtCitrulinaMalato";
-            this.txtCitrulinaMalato.Size = new System.Drawing.Size(87, 20);
+            this.txtCitrulinaMalato.Size = new System.Drawing.Size(102, 20);
             this.txtCitrulinaMalato.TabIndex = 16;
             // 
             // lblCitrulinaMalato

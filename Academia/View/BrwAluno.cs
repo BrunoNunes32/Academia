@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Academia.Window;
 using Academia.Class.Model;
 
 namespace Academia.View
@@ -17,7 +16,7 @@ namespace Academia.View
     public partial class BrwAluno : Form
     {
         Thread thread;
-        readonly AlunoController alunoController = new AlunoController();
+        readonly AlunoController controllerAluno = new AlunoController();
         readonly AlunoModel modelAluno = new AlunoModel();
 
         public BrwAluno()
@@ -25,9 +24,11 @@ namespace Academia.View
             InitializeComponent();
         }
 
+        //TELA SOMENTE PARA CONSULTA E VERIFICAR SE O ALUNO ESTA ATIVO
+
         private void BtnPesquisa_Click(object sender, EventArgs e)
         {
-            alunoController.Consultar(dtgAluno);
+            controllerAluno.Consultar(dtgAluno);
         }
 
         private void BtnEditarAluno_Click(object sender, EventArgs e)

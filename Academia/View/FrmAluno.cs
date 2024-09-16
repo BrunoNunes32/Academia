@@ -1,90 +1,81 @@
-﻿using Academia.Class.Controller;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Academia.Class.Model;
-using System;
-using System.Threading;
+using Academia.Class.Controller;
 using System.Windows.Forms;
+using System.Threading;
+using System.Security.Cryptography.X509Certificates;
 
-namespace Academia.Window
+namespace Academia.View
 {
     public partial class FrmAluno : Form
     {
         Thread thread;
         readonly AlunoModel modelAluno = new AlunoModel();
         readonly AlunoController controllerAluno = new AlunoController();
-        readonly MedicoesModel modelMedicoes = new MedicoesModel();
-        readonly MedicoesController controllerMedicoes = new MedicoesController();
-        //O MODO É PARA DEFINIR SE A TELA IRÁ ABRIR COMO MODO DE INSERÇÃO, CONSULTA E CONFIRMAÇÃO DE DELETAR OS DADOS.
-        //ISSO PARA EVITAR A CONSTRUÇÃO DE OUTRAS TELAS COM OS MESMOS DADOS
-        public FrmAluno(/*string MODO*/)
+
+        public FrmAluno()
         {
             InitializeComponent();
         }
-        //0: inserir    | 1: Consulta   | 2: Alterar    | 3: Confirmar exclusão/desativação
-        public int modo = 0;        
+
+        private void MedicoesAluno()
+        {
+            Application.Run(new FrmMedicoes());
+        }
+
         private void FrmAluno_Load(object sender, EventArgs e)
         {
-            //INSERIR
-            if (modelAluno.CPF.Length > 0)
+            if(modelAluno.CPF != "" || modelAluno.CPF != null)
             {
-                modo = 0;
-            }
-            //CONSULTAR
-            if (modelAluno.CPF.Length > 0)
-            {
-               modo = 1;
-            }
-            //ALTERAR
-            if (modelAluno.CPF.Length > 0)
-            {
-                modo = 2;
+                controllerAluno.Consultar(modelAluno);
             }
         }
-                
+
+        string sexo, status;
         private void BtnSalvar_Click(object sender, EventArgs e)
         {
-            modelAluno.Nome = txtNomeAluno.Text;
-            modelAluno.Celular = mskCelular.Text;
-            modelAluno.CPF = mskCPF.Text;
-            modelAluno.Celular = mskCelular.Text;
-            modelAluno.Telefone = mskTelefone.Text;
-            modelAluno.DtNascimento = mskDataNascimento.Text;
+            if (rdbInativo.Checked)
+            {
+                status = "0";
+            }
+            if (rdbAtivo.Checked)
+            {
+                status = "1";
+            }
+
 
             if (rdbFeminino.Checked == true)
             {
-                modelAluno.Sexo = "F";
+               this.sexo = "F";
             }
             if (rdbMasculino.Checked == true)
             {
-                modelAluno.Sexo = "M";
+               this.sexo = "M";
             }
+
+            modelAluno.EnviaDados(txtNomeAluno.Text, mskCPF.Text, mskDataNascimento.Text, Convert.ToChar(this.sexo), mskEmail.Text,mskCelular.Text,mskTelefone.Text, this.status);
+
             if (controllerAluno.Inserir(modelAluno) == true)
             {
                 MessageBox.Show(controllerAluno.mensagem);
-                modelMedicoes.CPF = mskCPF.Text;
-                modelMedicoes.Altura = txtAltura.Text;
-                modelMedicoes.Peso = txtPeso.Text;
-                modelMedicoes.Peitoral = txtPeitoral.Text;
-                modelMedicoes.Cintura = txtCintura.Text;
-                modelMedicoes.Quadril = txtQuadril.Text;
-                modelMedicoes.BracoD = txtBracoD.Text;
-                modelMedicoes.BracoE = txtBracoE.Text;
-                modelMedicoes.AnteBracoD = txtAntebracoD.Text;
-                modelMedicoes.AnteBracoE = txtAntebracoE.Text;
-                modelMedicoes.CoxaD = txtCoxaD.Text;
-                modelMedicoes.CoxaE = txtCoxaE.Text;
-                modelMedicoes.PanturrilhaD = txtPanturrilhaD.Text;
-                modelMedicoes.PanturrilhaE = txtPanturrilhaE.Text;
-
-                if (controllerMedicoes.Cadastro(modelMedicoes) == true)
+                if (MessageBox.Show("Deseja cadastrar as medições do aluno?", "Deseja continuar?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    MessageBox.Show(controllerMedicoes.mensagem);
+                    this.Close();//FECHANDO A TELA ATUAL
+                    thread = new Thread(MedicoesAluno);//INFORMANDO A TELA A SER CHAMADA LOGO EM SEGUIDA
+                    thread.SetApartmentState(ApartmentState.STA);//ESTADO DA THREAD
+                    thread.Start();//INICIANDO A TELA QUE FOI INFORMADA
                 }
-                else
-                {
-                    MessageBox.Show(controllerMedicoes.mensagem);
-                    controllerAluno.Deletar(modelAluno);
-                    MessageBox.Show(controllerAluno.mensagem);
-                }
+            }
+            else
+            {
+                MessageBox.Show(controllerAluno.mensagem);
             }
             LimparCampos();
         }
@@ -111,23 +102,7 @@ namespace Academia.Window
             mskTelefone.Text = "";
             txtNomeAluno.Text = "";
             mskEmail.Text = "";
-
-            //DADOS MEDIÇÕES
-            txtAltura.Text = "";
-            txtPeso.Text = "";
-            txtPeitoral.Text = "";
-            txtQuadril.Text = "";
-            txtCintura.Text = "";
-            txtAntebracoD.Text = "";
-            txtAntebracoE.Text = "";
-            txtBracoD.Text = "";
-            txtBracoE.Text = "";
-            txtCoxaD.Text = "";
-            txtCoxaE.Text = "";
-            txtPanturrilhaD.Text = "";
-            txtPanturrilhaE.Text = "";
-            txtTornozeloD.Text = "";
-            txtTornozeloE.Text = "";
         }
+
     }
 }

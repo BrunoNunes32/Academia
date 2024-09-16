@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Academia.Window
+namespace Academia.View
 {
     public partial class FrmCalculadoraTMB : Form
     {
@@ -10,6 +10,9 @@ namespace Academia.Window
         {
             InitializeComponent();
         }
+
+        //PRIMEIRA TELA CRIADA, FEITA PARA AJUDAR E SABER COMO ESTA O ESTADO DO ALUNO
+        //RECOMENDA A MEDIA GERAL DE COMO O ALUNO PODERA SE ALIMETAR DOS MACROS BASICOS
 
         Thread thread;
         public int peso, altura, idade;

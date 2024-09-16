@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Academia.Class.Connection;
 using Academia.Class.Model;
 using System.Windows.Forms;
+using Dapper;
 
 namespace Academia.Class.Controller
 {
@@ -23,7 +24,7 @@ namespace Academia.Class.Controller
         {
             //DANDO O COMANDO QUE SERÁ EXECUTADO NO BANCO DE DADOS | BITATIVO 1 POIS SE ESTA CADASTRANDO, ELE ESTA ATIVO
             cmd.CommandText = "INSERT INTO tblAluno(nome, CPF, dtNascimento, telefone, celular, sexo, bitAtivo, email, dataCadastro) VALUES(@nome, @CPF, @dtNascimento, @telefone, @celular, @sexo, 1, @email, GETDATE())"; 
-            //PARAMETROS 
+            //PARAMETROS
             if (aluno.Nome != "" && aluno.Nome != null)
             {
                 cmd.Parameters.Add("@nome", SqlDbType.VarChar).Value = aluno.Nome;
@@ -126,6 +127,7 @@ namespace Academia.Class.Controller
             }
         }
 
+        //VERIFICANDO SE HÁ UM CADASTRO NO BANCO
         public bool ConsultarExistencia(AlunoModel aluno)
         {
             cmd.CommandText = "SELECT COUNT(*) AS EXISTENCIA FROM tblAluno WHERE CPF = '@CPF'";
@@ -141,9 +143,11 @@ namespace Academia.Class.Controller
             try
             {
                 cmd.Connection = conexao.Conectar();//ABRINDO CONEXÃO
+                int contador = cmd.Connection.QuerySingleOrDefault(cmd.CommandText);
                 cmd.ExecuteNonQuery();//EXECUTANDO O COMANDO
                 cmd.Connection = conexao.Desconectar();//FECHANDO A CONEXÃO
-                mensagem = "Aluno deletado com sucesso!";//INFORMANDO A MENSAGEM DE CONCLUSÃO
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                mensagem = "Aluno cadastrado com sucesso";
                 return true;
             }
             catch (SqlException error)
@@ -153,6 +157,7 @@ namespace Academia.Class.Controller
             }
         }
 
+        //CONSULTA GERAL SEM FILTRO
         public bool Consultar(DataGridView dataGrid)
         {
             cmd.CommandText = "SELECT nome as [Nome], CPF, dtNascimento as [Data de Nascimento], telefone as [Telefone], celular as [Celular], sexo as [Sexo], email as [E-mail], dataCadastro as [Data do Cadastro] FROM tblAluno";
@@ -166,11 +171,84 @@ namespace Academia.Class.Controller
                 conexao.Desconectar();
                 return true;
             }
-            catch(SqlException error)
+            catch (SqlException error)
             {
                 mensagem = "Erro na consulta!\n" + error;
                 return false;
-            }                        
-        }            
+            }
+        }
+
+        //CONSULTA COM FILTRO PARA LEVAR EM UMA DATAGRID 
+        public bool Consultar(DataGridView dataGrid, AlunoModel aluno)
+        {
+            cmd.CommandText = "SELECT nome as [Nome], CPF, dtNascimento as [Data de Nascimento], telefone as [Telefone], celular as [Celular], sexo[Sexo], email as [E-mail], dataCadastro as [Data do Cadastro] FROM tblAluno WHERE 1=1 ";
+            if (aluno.CPF != "" && aluno.CPF != null)
+            {
+                cmd.CommandText += "\n AND CPF = @CPF ";
+                cmd.Parameters.Add("@CPF", SqlDbType.VarChar).Value = aluno.CPF;
+            }
+            if (aluno.Nome != "" && aluno.Nome != null)
+            {
+                cmd.CommandText += "\n AND nome = @NOME ";
+                cmd.Parameters.Add("@NOME", SqlDbType.VarChar).Value = aluno.CPF;
+            }
+            if (aluno.DtNascimento != "" && aluno.DtNascimento != null)
+            {
+                cmd.CommandText += "\n AND dtNascimento = @DTNASCIMENTO ";
+                cmd.Parameters.Add("@DTNASCIMENTO", SqlDbType.VarChar).Value = aluno.CPF;
+            }
+            if (aluno.Sexo != "" && aluno.Sexo != null)
+            {
+                cmd.CommandText += "\n AND sexo = @SEXO ";
+                cmd.Parameters.Add("@SEXO", SqlDbType.VarChar).Value = aluno.CPF;
+            }
+            if (aluno.Email != "" && aluno.Email != null)
+            {
+                cmd.CommandText += "\n AND email = @EMAIL ";
+                cmd.Parameters.Add("@EMAIL", SqlDbType.VarChar).Value = aluno.CPF;
+            }
+
+            try
+            {
+                cmd.Connection = conexao.Conectar();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable tabelaAluno = new DataTable();
+                da.Fill(tabelaAluno);
+                dataGrid.DataSource = tabelaAluno;
+                conexao.Desconectar();
+                return true;
+            }
+            catch (SqlException error)
+            {
+                mensagem = "Erro na consulta!\n" + error;
+                return false;
+            }
+        }
+        public bool Consultar(AlunoModel aluno)
+        {
+            cmd.CommandText = "SELECT nome as [Nome], CPF, dtNascimento as [Data de Nascimento], telefone as [Telefone], celular as [Celular], sexo as [Sexo], email as [E-mail], dataCadastro as [Data do Cadastro] FROM tblAluno WHERE CPF = @CPF";
+            
+            if (aluno.CPF != "" && aluno.CPF != null)
+            {
+                cmd.CommandText += "\n AND CPF = @CPF ";
+                cmd.Parameters.Add("@CPF", SqlDbType.VarChar).Value = aluno.CPF;
+            }
+
+            try
+            {
+                cmd.Connection = conexao.Conectar();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable tabelaAluno = new DataTable();
+                da.Fill(tabelaAluno);
+               // dataGrid.DataSource = tabelaAluno;
+                conexao.Desconectar();
+                return true;
+            }
+            catch (SqlException error)
+            {
+                mensagem = "Erro na consulta!\n" + error;
+                return false;
+            }
+        }
     }    
 }
